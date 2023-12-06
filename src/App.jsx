@@ -76,11 +76,11 @@ function App() {
   }
 
   const handleDefinition = () => {
-    definition.innerText = `Definition: ${currentWord.definitions[0].definition}`
+    definition.innerText = `Definition: ${currentWord.definition}`
   }
 
   const handlePartOfSpeech = () => {
-    partOfSpeech.innerText = `Part of speech: ${currentWord.definitions[0].partofSpeech}`
+    partOfSpeech.innerText = `Part of speech: ${currentWord.partOfSpeech}`
   }
 
   const handleSpell = () => {
