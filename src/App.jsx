@@ -30,6 +30,7 @@ function App() {
         setCurrentWord(newWord)
         const newSrc = res.data.audio
         setSrc(newSrc)
+        blink()
       })
       .catch(err => console.log(err))
   }
