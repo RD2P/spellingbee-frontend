@@ -24,7 +24,7 @@ function App() {
   const partOfSpeech = document.getElementById("part-of-speech")
 
   const grabWord = async () => {
-    axios.get('http://localhost:4000/api/v1/random')
+    axios.get('https://spellingbee-backend.onrender.com/api/v1/random')
       .then(res => {
         const newWord = res.data
         setCurrentWord(newWord)
