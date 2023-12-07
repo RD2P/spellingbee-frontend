@@ -12,6 +12,8 @@ function App() {
   const [currentWord, setCurrentWord] = useState('old')
   const [showInput, setShowInput] = useState(false)
   const [result, setResult] = useState(null)
+  const [score, setScore] = useState(0)
+  const [done, setDone] = useState(false)
 
   const inputRef = useRef(null)
   const definitionRef = useRef(null)
@@ -24,13 +26,20 @@ function App() {
   const partOfSpeech = document.getElementById("part-of-speech")
 
   const grabWord = async () => {
-    axios.get('https://spellingbee-backend.onrender.com/api/v1/random')
+    axios.get('http://localhost:4000/api/v1/word')
       .then(res => {
-        const newWord = res.data
-        setCurrentWord(newWord)
-        const newSrc = res.data.audio
-        setSrc(newSrc)
-        blink()
+        const wordsLeft = res.data.wordsLeft
+        if (wordsLeft) {
+          console.log(wordsLeft)
+          const newWord = res.data.word
+          setCurrentWord(newWord)
+          const newSrc = res.data.word.audio
+          setSrc(newSrc)
+          blink()
+        } else {
+          console.log("No more words")
+          setDone(true)
+        }
       })
       .catch(err => console.log(err))
   }
@@ -46,6 +55,7 @@ function App() {
     if (userInput.toLowerCase() == currentWord.word) {
       setResult(true)
       resultRef.current.innerText = "Correct!"
+      setScore(score + 1)
       soundEffectRef.current.src = beep
       soundEffectRef.current
     } else {
@@ -94,6 +104,17 @@ function App() {
     }
   }, [showInput]);
 
+  const handleRestart = () => {
+    setDone(false)
+    setScore(0)
+    axios.post('http://localhost:4000/api/v1/words')
+      .then(() => console.log(res.data))
+      .catch(err => console.log(err))
+    setTimeout(() => {
+      grabWord()
+    }, 2000)
+  }
+
   return (
     <>
 
@@ -101,10 +122,20 @@ function App() {
 
         <div className={`w-full h-full absolute opacity-50 rounded-xl  ${!start ? 'z-10 bg-gray-400' : ''}`}></div>
 
+        {done &&
+          <div className='w-full h-full absolute bg-slate-400 rounded-xl z-10 flex justify-center align-middle'>
+            <div className='text-white flex flex-col justify-center'>
+              <h2 className='text-3xl mb-6'>No more words</h2>
+              <button className='bg-green-400 p-7 text-2xl hover:opacity-90' onClick={handleRestart}>Restart</button>
+            </div>
+          </div>
+        }
+
         <audio autoPlay ref={soundEffectRef}>Your browser does not support audio</audio>
         {!start && <button className='absolute top-20 right-20 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>}
 
         <div className="bg-orange-300 py-16 rounded-2xl relative">
+          <div className='absolute left-14 text-3xl font-semibold text-blue-500 bg-slate-100 p-5 rounded-md z-10'>Score: {score}</div>
           <h1 className="text-3xl font-bold text-center my-8 text-white">Spelling Bee</h1>
           <div className="flex flex-col items-center gap-5">
             <div className='bg-gray-100 p-2 rounded-lg' id="soundIcon">
