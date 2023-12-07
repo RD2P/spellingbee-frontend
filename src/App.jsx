@@ -26,7 +26,7 @@ function App() {
   const partOfSpeech = document.getElementById("part-of-speech")
 
   const grabWord = async () => {
-    axios.get('http://localhost:4000/api/v1/word')
+    axios.get('https://spellingbee-backend.onrender.com/api/v1/word')
       .then(res => {
         const wordsLeft = res.data.wordsLeft
         if (wordsLeft) {
@@ -107,7 +107,7 @@ function App() {
   const handleRestart = () => {
     setDone(false)
     setScore(0)
-    axios.post('http://localhost:4000/api/v1/words')
+    axios.post('https://spellingbee-backend.onrender.com/api/v1/words')
       .then(() => console.log(res.data))
       .catch(err => console.log(err))
     setTimeout(() => {
