@@ -4,6 +4,7 @@ import mic from './assets/microphone.png'
 import axios from 'axios'
 import ding from './assets/ding.mp3'
 import beep from './assets/beep.mp3'
+import stage from './assets/stage.jpeg'
 
 function App() {
 
@@ -37,7 +38,6 @@ function App() {
           setSrc(newSrc)
           blink()
         } else {
-          console.log("No more words")
           setDone(true)
         }
       })
@@ -108,7 +108,6 @@ function App() {
     setDone(false)
     setScore(0)
     axios.post('https://spellingbee-backend.onrender.com/api/v1/words')
-      .then(() => console.log(res.data))
       .catch(err => console.log(err))
     setTimeout(() => {
       grabWord()
@@ -116,10 +115,11 @@ function App() {
   }
 
   return (
-    <>
+    < >
 
       <div className='max-w-7xl mx-auto mt-12 relative'>
 
+        {/* Start page*/}
         <div className={`w-full h-full absolute opacity-50 rounded-xl  ${!start ? 'z-10 bg-gray-400' : ''}`}></div>
 
         {done &&
@@ -134,7 +134,7 @@ function App() {
         <audio autoPlay ref={soundEffectRef}>Your browser does not support audio</audio>
         {!start && <button className='absolute top-20 right-20 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>}
 
-        <div className="bg-orange-300 py-16 rounded-2xl relative">
+        <div className="py-16 rounded-2xl relative">
           <div className='absolute left-14 text-3xl font-semibold text-blue-500 bg-slate-100 p-5 rounded-md z-10'>Score: {score}</div>
           <h1 className="text-3xl font-bold text-center my-8 text-white">Spelling Bee</h1>
           <div className="flex flex-col items-center gap-5">
@@ -152,12 +152,12 @@ function App() {
 
             <div id="result" ref={resultRef} className={`text-4xl font-bold ${result ? 'text-green-400' : 'text-red-400'}`}></div>
 
-            <div className='text-lg w-2/3'>
-              <p id="definition" ref={definitionRef} className='text-3xl text-gray-600 text-center'></p>
+            <div className='w-2/3'>
+              <p id="definition" ref={definitionRef} className='text-3xl bg-blue-200 p-4 rounded-md text-gray-600 text-center'></p>
             </div>
 
-            <div>
-              <p id="part-of-speech" ref={partOfSpeechRef} className='text-3xl text-gray-600 text-center'></p>
+            <div className=''>
+              <p id="part-of-speech" ref={partOfSpeechRef} className='text-3xl bg-blue-200 p-4 rounded-md text-gray-600 text-center'></p>
             </div>
 
 
@@ -168,8 +168,8 @@ function App() {
               <div className='p-14 text-left text-lg flex flex-col justify-between'>
                 <div className='font-thin text-3xl text-white '>
                   <p className='my-4 option' onClick={handleRepeat}>Can you please repeat the word?</p>
-                  <p className='my-4  option' onClick={handleDefinition}>May I have the definition?</p>
-                  <p className='my-4  option' onClick={handlePartOfSpeech}>May I please have the part of speech?</p>
+                  <p className='my-4 option' onClick={handleDefinition}>May I have the definition?</p>
+                  <p className='my-4 option' onClick={handlePartOfSpeech}>May I please have the part of speech?</p>
                 </div>
                 <div>
                   <button className='bg-orange-400 py-3 px-6 text-white font-semibold hover:opacity-95' onClick={handleSpell}>SPELL</button>
