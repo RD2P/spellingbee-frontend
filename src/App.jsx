@@ -70,6 +70,10 @@ function App() {
     setShowInput(false)
   }
 
+  const handleInputCheck = (e) => {
+    if (e.key === "Enter") check()
+  }
+
   const blink = () => {
     const soundIcon = document.getElementById("soundIcon")
     soundIcon.classList.toggle("sound")
@@ -154,8 +158,8 @@ function App() {
 
             {showInput &&
               <div className='flex'>
-                <input className='p-4 w-96 text-xl lg:text-3xl' type="text" ref={inputRef} id="input" placeholder="Spell the word" />
-                <button className='bg-white p-6 ml-4' onClick={check}>Check</button>
+                <input className='px-2 lg:p-4 text-xl lg:text-3xl w-56 lg:w-96' type="text" ref={inputRef} id="input" placeholder="Spell the word" onKeyDown={handleInputCheck} />
+                <button className='bg-white p-4 lg:p-6 ml-2 lg:ml-4 text-blue-700 font-medium' onClick={check}>Check</button>
               </div>
             }
 
@@ -173,9 +177,9 @@ function App() {
             <div className='flex rounded-lg justify-center p-12 '>
               <div className='p-14 text-left text-lg flex flex-col justify-between'>
                 <div className='font-thin text-3xl text-white '>
-                  <p className='my-4 option text-lg lg:text-2xl' onClick={handleRepeat}>Can you please repeat the word?</p>
-                  <p className='my-4 option text-lg lg:text-2xl' onClick={handleDefinition}>May I have the definition?</p>
-                  <p className='my-4 option text-lg lg:text-2xl' onClick={handlePartOfSpeech}>May I please have the part of speech?</p>
+                  <p className='my-4 option text-xl lg:text-2xl' onClick={handleRepeat}>Can you please repeat the word?</p>
+                  <p className='my-4 option text-xl lg:text-2xl' onClick={handleDefinition}>May I have the definition?</p>
+                  <p className='my-4 option text-xl lg:text-2xl' onClick={handlePartOfSpeech}>May I please have the part of speech?</p>
                 </div>
                 <div>
                   <button className='bg-orange-400 py-3 px-6 text-white font-semibold hover:opacity-95' onClick={handleSpell}>SPELL</button>

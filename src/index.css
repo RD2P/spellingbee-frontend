@@ -37,6 +37,7 @@ input {
 
 .option:hover {
   color: yellow;
+  text-shadow: white 1px 0px 10px
 }
 
 .start-modal {
