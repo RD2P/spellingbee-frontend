@@ -151,7 +151,7 @@ function App() {
           <div className="flex flex-col items-center gap-5">
 
             {/* Sound icon */}
-            <div className='bg-gray-100 p-4 rounded-lg mt-9 w-16 lg:w-24' id="soundIcon">
+            <div className='bg-gray-100 p-4 rounded-lg mt-9 w-16 lg:w-24 cursor-pointer' id="soundIcon" onClick={handleRepeat}>
               <img src={sound} />
               <audio id="sound" autoPlay src={src}>Your browser does not support audio</audio>
             </div>
