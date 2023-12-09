@@ -6,10 +6,15 @@ body {
   padding: 0;
   margin: 0;
   background-image: url('./assets/stage.jpeg');
+  background-position: center;
 }
 
 #root {
   padding: 0;
+}
+
+h1 {
+  /* margin: none; */
 }
 
 button {
@@ -32,6 +37,10 @@ input {
 
 .option:hover {
   color: blue;
+}
+
+.start-modal {
+  background-color: rgb(23, 44, 67, 0.7);
 }
 
 @keyframes blink {

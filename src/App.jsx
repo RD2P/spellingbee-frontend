@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import sound from './assets/sound.png'
-import mic from './assets/microphone.png'
 import axios from 'axios'
 import ding from './assets/ding.mp3'
 import beep from './assets/beep.mp3'
-import stage from './assets/stage.jpeg'
 
 function App() {
 
@@ -31,7 +29,6 @@ function App() {
       .then(res => {
         const wordsLeft = res.data.wordsLeft
         if (wordsLeft) {
-          console.log(wordsLeft)
           const newWord = res.data.word
           setCurrentWord(newWord)
           const newSrc = res.data.word.audio
@@ -116,12 +113,18 @@ function App() {
 
   return (
     < >
+      <h1 className="text-3xl font-bold text-center text-white py-6 bg">Spelling Bee</h1>
 
-      <div className='max-w-7xl mx-auto mt-12 relative'>
+      <div className='max-w-7xl mx-auto relative'>
 
-        {/* Start page*/}
-        <div className={`w-full h-full absolute opacity-50 rounded-xl  ${!start ? 'z-10 bg-gray-400' : ''}`}></div>
+        {/* Start modal*/}
+        {!start &&
+          <div className='w-full h-screen absolute rounded-xl z-10 start-modal'>
+            <button className='absolute top-20 right-20 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>
+          </div>
+        }
 
+        {/* Restart modal */}
         {done &&
           <div className='w-full h-full absolute bg-slate-400 rounded-xl z-10 flex justify-center align-middle'>
             <div className='text-white flex flex-col justify-center'>
@@ -131,14 +134,20 @@ function App() {
           </div>
         }
 
+        {/* Ding Beep */}
         <audio autoPlay ref={soundEffectRef}>Your browser does not support audio</audio>
-        {!start && <button className='absolute top-20 right-20 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>}
 
-        <div className="py-16 rounded-2xl relative">
-          <div className='absolute left-14 text-3xl font-semibold text-blue-500 bg-slate-100 p-5 rounded-md z-10'>Score: {score}</div>
-          <h1 className="text-3xl font-bold text-center my-8 text-white">Spelling Bee</h1>
+        <div className="py-16 rounded-2xl relative ">
+
+          {/* Score */}
+          <div className='absolute left-1/2 -translate-x-1/2  md:left-40 top-1 text-2xl font-semibold text-blue-500 bg-slate-100 p-5 rounded-lg'>
+            Score: {score}
+          </div>
+
           <div className="flex flex-col items-center gap-5">
-            <div className='bg-gray-100 p-2 rounded-lg' id="soundIcon">
+
+            {/* Sound icon */}
+            <div className='bg-gray-100 p-4 rounded-lg mt-9' id="soundIcon">
               <img src={sound} />
               <audio id="sound" autoPlay src={src}>Your browser does not support audio</audio>
             </div>
@@ -153,18 +162,15 @@ function App() {
             <div id="result" ref={resultRef} className={`text-4xl font-bold ${result ? 'text-green-400' : 'text-red-400'}`}></div>
 
             <div className='w-2/3'>
-              <p id="definition" ref={definitionRef} className='text-3xl bg-blue-200 p-4 rounded-md text-gray-600 text-center'></p>
+              <p id="definition" ref={definitionRef} className='text-xl lg:text-3xl bg-blue-200 rounded-md text-gray-600 text-center'></p>
             </div>
 
             <div className=''>
-              <p id="part-of-speech" ref={partOfSpeechRef} className='text-3xl bg-blue-200 p-4 rounded-md text-gray-600 text-center'></p>
+              <p id="part-of-speech" ref={partOfSpeechRef} className='text-xl lg:text-3xl bg-blue-200 rounded-md text-gray-600 text-center'></p>
             </div>
 
 
-            <div className='flex rounded-lg justify-center p-12 bg-blue-400'>
-              <div className='bg-slate-200 rounded-xl p-3'>
-                <img src={mic} width='300' className='' />
-              </div>
+            <div className='flex rounded-lg justify-center p-12 '>
               <div className='p-14 text-left text-lg flex flex-col justify-between'>
                 <div className='font-thin text-3xl text-white '>
                   <p className='my-4 option' onClick={handleRepeat}>Can you please repeat the word?</p>
