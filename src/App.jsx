@@ -177,9 +177,9 @@ function App() {
             <div className='flex rounded-lg justify-center p-12 '>
               <div className='p-14 text-left text-lg flex flex-col justify-between'>
                 <div className='font-thin text-3xl text-white '>
-                  <p className='my-4 option text-xl lg:text-2xl' onClick={handleRepeat}>Can you please repeat the word?</p>
-                  <p className='my-4 option text-xl lg:text-2xl' onClick={handleDefinition}>May I have the definition?</p>
-                  <p className='my-4 option text-xl lg:text-2xl' onClick={handlePartOfSpeech}>May I please have the part of speech?</p>
+                  <p className='my-4 option text-xl lg:text-2xl glow' onClick={handleRepeat}>Can you please repeat the word?</p>
+                  <p className='my-4 option text-xl lg:text-2xl glow' onClick={handleDefinition}>May I have the definition?</p>
+                  <p className='my-4 option text-xl lg:text-2xl glow' onClick={handlePartOfSpeech}>May I please have the part of speech?</p>
                 </div>
                 <div>
                   <button className='bg-orange-400 py-3 px-6 text-white font-semibold hover:opacity-95' onClick={handleSpell}>SPELL</button>
