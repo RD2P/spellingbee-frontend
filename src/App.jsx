@@ -151,7 +151,7 @@ function App() {
           <div className="flex flex-col items-center gap-5">
 
             {/* Sound icon */}
-            <div className='bg-gray-100 p-4 rounded-lg mt-9' id="soundIcon">
+            <div className='bg-gray-100 p-4 rounded-lg mt-9 w-16 lg:w-24' id="soundIcon">
               <img src={sound} />
               <audio id="sound" autoPlay src={src}>Your browser does not support audio</audio>
             </div>
@@ -174,8 +174,8 @@ function App() {
             </div>
 
 
-            <div className='flex rounded-lg justify-center p-12 '>
-              <div className='p-14 text-left text-lg flex flex-col justify-between'>
+            <div className='flex rounded-lg justify-center'>
+              <div className='text-left text-lg flex flex-col justify-between'>
                 <div className='font-thin text-3xl text-white '>
                   <p className='my-4 option text-xl lg:text-2xl glow' onClick={handleRepeat}>Can you please repeat the word?</p>
                   <p className='my-4 option text-xl lg:text-2xl glow' onClick={handleDefinition}>May I have the definition?</p>
