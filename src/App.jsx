@@ -123,17 +123,18 @@ function App() {
 
         {/* Start modal*/}
         {!start &&
-          <div className='w-full h-screen absolute rounded-xl z-10 start-modal'>
-            <button className='absolute top-20 right-20 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>
+          <div className='w-full h-screen absolute z-10 start-modal'>
+            <button className='absolute top-28 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>
           </div>
         }
 
         {/* Restart modal */}
         {done &&
-          <div className='w-full h-full absolute bg-slate-400 rounded-xl z-10 flex justify-center align-middle'>
-            <div className='text-white flex flex-col justify-center'>
-              <h2 className='text-3xl mb-6'>No more words</h2>
-              <button className='bg-green-400 p-7 text-2xl hover:opacity-90' onClick={handleRestart}>Restart</button>
+          <div className='w-full h-full absolute bg-slate-400 z-10 flex justify-center align-middle'>
+            <div className='px-7 text-white flex flex-col justify-center'>
+              <p className="text-2xl text-center mb-5">{`You scored ${score}`}</p>
+              <h2 className='text-center text-xl lg:text-3xl mb-6'>Those are all the words. Thank you for playing!</h2>
+              <button className='bg-green-400 p-3 lg:p-7 text-xl lg:text-2xl hover:opacity-90' onClick={handleRestart}>Restart</button>
             </div>
           </div>
         }
