@@ -13,6 +13,9 @@ function App() {
   const [result, setResult] = useState(null)
   const [score, setScore] = useState(0)
   const [done, setDone] = useState(false)
+  const [words, setWords] = useState([])
+  const [restart, setRestart] = useState(false)
+  const [possibleScore, setPossibleScore] = useState(null)
 
   const inputRef = useRef(null)
   const definitionRef = useRef(null)
@@ -24,27 +27,51 @@ function App() {
   const definition = document.getElementById("definition")
   const partOfSpeech = document.getElementById("part-of-speech")
 
-  const grabWord = async () => {
-    axios.get('https://spellingbee-backend.onrender.com/api/v1/word')
-      .then(res => {
-        const wordsLeft = res.data.wordsLeft
-        if (wordsLeft) {
-          const newWord = res.data.word
-          setCurrentWord(newWord)
-          const newSrc = res.data.word.audio
-          setSrc(newSrc)
-          blink()
-        } else {
-          setDone(true)
-        }
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/v1/words')
+      .then((res) => {
+        setWords(res.data)
+        setPossibleScore(res.data.length)
       })
-      .catch(err => console.log(err))
+  }, [restart])
+
+  const getRandomIndex = () => {
+    const randomIndex = Math.floor(Math.random() * words.length)
+    return randomIndex
   }
 
-  const handleStart = () => {
-    grabWord()
+  const handleStart = async () => {
     setStart(true)
-    blink()
+    grabWord()
+  }
+
+  const handleRestart = () => {
+    setDone(false)
+    setScore(0)
+    grabWord()
+  }
+
+
+  const grabWord = async () => {
+    // axios.get('https://spellingbee-backend.onrender.com/api/v1/word')
+    try {
+      if (words.length > 0) {
+        const randomIndex = getRandomIndex()
+        const randomWord = words[randomIndex]
+        words.splice(randomIndex, 1)
+        const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
+        const newWord = result.data
+        setCurrentWord(newWord)
+        const newSrc = result.data.audio
+        setSrc(newSrc)
+        blink()
+      } else {
+        setDone(true)
+        setRestart(prev => !prev)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const check = () => {
@@ -105,19 +132,15 @@ function App() {
     }
   }, [showInput]);
 
-  const handleRestart = () => {
-    setDone(false)
-    setScore(0)
-    axios.post('https://spellingbee-backend.onrender.com/api/v1/words')
-      .catch(err => console.log(err))
-    setTimeout(() => {
-      grabWord()
-    }, 2000)
+  const test = () => {
+    setRestart(prevState => !prevState)
+    console.log(restart)
   }
+
 
   return (
     < >
-      <h1 className="text-3xl font-bold text-center text-white py-6 bg">Spelling Bee</h1>
+      <h1 className="text-3xl font-bold text-center text-white py-6 bg" onClick={test}>Spelling Bee</h1>
 
       <div className='max-w-7xl mx-auto relative'>
 
@@ -132,7 +155,7 @@ function App() {
         {done &&
           <div className='w-full h-full absolute bg-slate-400 z-10 flex justify-center align-middle'>
             <div className='px-7 text-white flex flex-col justify-center'>
-              <p className="text-2xl text-center mb-5">{`You scored ${score}`}</p>
+              <p className="text-2xl text-center mb-5">{`You scored ${score} out of ${possibleScore}`}</p>
               <h2 className='text-center text-xl lg:text-3xl mb-6'>Those are all the words. Thank you for playing!</h2>
               <button className='bg-green-400 p-3 lg:p-7 text-xl lg:text-2xl hover:opacity-90' onClick={handleRestart}>Restart</button>
             </div>
