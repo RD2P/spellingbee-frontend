@@ -28,7 +28,9 @@ function App() {
   const partOfSpeech = document.getElementById("part-of-speech")
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/v1/words')
+
+    // axios.get('http://localhost:4000/api/v1/words')
+    axios.get('https://spellingbee-backend.onrender.com/api/v1/words')
       .then((res) => {
         setWords(res.data)
         setPossibleScore(res.data.length)
@@ -51,15 +53,15 @@ function App() {
     grabWord()
   }
 
-
   const grabWord = async () => {
-    // axios.get('https://spellingbee-backend.onrender.com/api/v1/word')
     try {
       if (words.length > 0) {
         const randomIndex = getRandomIndex()
         const randomWord = words[randomIndex]
         words.splice(randomIndex, 1)
-        const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
+        
+        // const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
+        const result = await axios.get(`https://spellingbee-backend.onrender.com/api/v1/word?w=${randomWord}`)
         const newWord = result.data
         setCurrentWord(newWord)
         const newSrc = result.data.audio
@@ -132,15 +134,9 @@ function App() {
     }
   }, [showInput]);
 
-  const test = () => {
-    setRestart(prevState => !prevState)
-    console.log(restart)
-  }
-
-
   return (
     < >
-      <h1 className="text-3xl font-bold text-center text-white py-6 bg" onClick={test}>Spelling Bee</h1>
+      <h1 className="text-3xl font-bold text-center text-white py-6 bg">Spelling Bee</h1>
 
       <div className='max-w-7xl mx-auto relative'>
 
