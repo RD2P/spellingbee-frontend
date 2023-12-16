@@ -7,6 +7,7 @@ body {
   margin: 0;
   background-image: url('./assets/stage.jpeg');
   background-position: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #root {
@@ -79,15 +80,19 @@ input {
   0% {
     box-shadow: 3px 3px 2px orange;
   }
+
   25% {
     box-shadow: -3px 3px 2px orange;
   }
+
   50% {
     box-shadow: -3px -3px 2px orange;
   }
+
   75% {
     box-shadow: 3px -3px 2px orange;
   }
+
   100% {
     box-shadow: 3px 3px 2px orange;
   }
