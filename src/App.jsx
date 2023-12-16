@@ -158,36 +158,37 @@ function App() {
 
   return (
     < >
-      <h1 className="text-3xl font-bold text-center text-white py-6 bg">Spelling Bee</h1>
+      {/* Start modal*/}
+      {!start &&
+        <div className='w-full h-screen absolute z-10 start-modal flex flex-col justify-center items-center px-16'>
+          <div className='bg-gray-500 mb-11 p-5 rounded-md'>
+            <p className='text-white md:text-xl text-center'>Thanks for trying out Spelling Bee 🥳</p>
+            {!words &&
+              <div>
+                <p className='text-white md:text-xl text-center'>Please allow a few seconds for the server to spin up...</p>
+                <div className='flex justify-center my-10'>
+                  <button className='p-4 bg-blue-200 wait-btn flex justify-center' onClick={handleWait}>
+                    <img src={wait} className='w-9' />
+                    <audio src={tick} autoPlay id="wait-tick" />
+                  </button>
+                </div>
+                {
+                  <p className='text-center text-white'>{waitNotes()}</p>
+                }
+              </div>
+            }
+          </div>
+
+          {words &&
+            <button className='w-32 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30 ' onClick={handleStart}>Start</button>
+          }
+        </div>
+      }
+
+      <h1 className="text-xl lg:text-3xl font-bold text-center text-blue-700 py-6 bg-[#ffd580] mb-12">Spelling Bee</h1>
 
       <div className='max-w-7xl mx-auto relative'>
 
-        {/* Start modal*/}
-        {!start &&
-          <div className='w-full h-screen absolute z-10 start-modal flex flex-col justify-center items-center px-16'>
-            <div className='bg-gray-500 mb-11 p-5 rounded-md'>
-              <p className='text-white md:text-xl text-center'>Thanks for trying out Spelling Bee 🥳</p>
-              {!words &&
-                <div>
-                  <p className='text-white md:text-xl text-center'>Please allow a few seconds for the server to spin up...</p>
-                  <div className='flex justify-center my-10'>
-                    <button className='p-4 bg-blue-200 wait-btn flex justify-center' onClick={handleWait}>
-                      <img src={wait} className='w-9' />
-                      <audio src={tick} autoPlay id="wait-tick" />
-                    </button>
-                  </div>
-                  {
-                    <p className='text-center text-white'>{waitNotes()}</p>
-                  }
-                </div>
-              }
-            </div>
-
-            {words &&
-              <button className='w-32 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30 ' onClick={handleStart}>Start</button>
-            }
-          </div>
-        }
 
         {/* Restart modal */}
         {done &&
