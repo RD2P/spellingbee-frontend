@@ -18,7 +18,6 @@ function App() {
   const [words, setWords] = useState(null)
   const [restart, setRestart] = useState(false)
   const [possibleScore, setPossibleScore] = useState(null)
-  const [waitText, setWaitText] = useState(null)
 
   const inputRef = useRef(null)
   const definitionRef = useRef(null)
@@ -31,8 +30,8 @@ function App() {
   const partOfSpeech = document.getElementById("part-of-speech")
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/v1/words')
-      // axios.get('https://spellingbee-backend.onrender.com/api/v1/words')
+    // axios.get('http://localhost:4000/api/v1/words')
+    axios.get('https://spellingbee-backend.onrender.com/api/v1/words')
       .then((res) => {
         setWords(res.data)
         setPossibleScore(res.data.length)
@@ -62,8 +61,8 @@ function App() {
         const randomWord = words[randomIndex]
         words.splice(randomIndex, 1)
 
-        const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
-        // const result = await axios.get(`https://spellingbee-backend.onrender.com/api/v1/word?w=${randomWord}`)
+        // const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
+        const result = await axios.get(`https://spellingbee-backend.onrender.com/api/v1/word?w=${randomWord}`)
         const newWord = result.data
         setCurrentWord(newWord)
         const newSrc = result.data.audio
