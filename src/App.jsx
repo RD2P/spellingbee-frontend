@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import sound from './assets/sound.png'
+import wait from './assets/wait.png'
 import axios from 'axios'
 import ding from './assets/ding.mp3'
 import beep from './assets/beep.mp3'
+import tick from './assets/tick.mp3'
 
 function App() {
 
@@ -13,9 +15,10 @@ function App() {
   const [result, setResult] = useState(null)
   const [score, setScore] = useState(0)
   const [done, setDone] = useState(false)
-  const [words, setWords] = useState([])
+  const [words, setWords] = useState(null)
   const [restart, setRestart] = useState(false)
   const [possibleScore, setPossibleScore] = useState(null)
+  const [waitText, setWaitText] = useState(null)
 
   const inputRef = useRef(null)
   const definitionRef = useRef(null)
@@ -28,9 +31,8 @@ function App() {
   const partOfSpeech = document.getElementById("part-of-speech")
 
   useEffect(() => {
-
-    // axios.get('http://localhost:4000/api/v1/words')
-    axios.get('https://spellingbee-backend.onrender.com/api/v1/words')
+    axios.get('http://localhost:4000/api/v1/words')
+      // axios.get('https://spellingbee-backend.onrender.com/api/v1/words')
       .then((res) => {
         setWords(res.data)
         setPossibleScore(res.data.length)
@@ -59,9 +61,9 @@ function App() {
         const randomIndex = getRandomIndex()
         const randomWord = words[randomIndex]
         words.splice(randomIndex, 1)
-        
-        // const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
-        const result = await axios.get(`https://spellingbee-backend.onrender.com/api/v1/word?w=${randomWord}`)
+
+        const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
+        // const result = await axios.get(`https://spellingbee-backend.onrender.com/api/v1/word?w=${randomWord}`)
         const newWord = result.data
         setCurrentWord(newWord)
         const newSrc = result.data.audio
@@ -134,6 +136,27 @@ function App() {
     }
   }, [showInput]);
 
+  const waitNotes = () => {
+    const notes = [
+      "still waiting...",
+      "a bit longer 🫸",
+      "sorry...",
+      "it's a free tier web service...",
+      "💤",
+      "🦒",
+      "🍍",
+      "🐝🐝🐝"
+    ]
+
+    const i = Math.floor(Math.random() * notes.length);
+    const item = notes[i];
+    return item
+  }
+
+  function handleWait() {
+    window.location.reload(false);
+  }
+
   return (
     < >
       <h1 className="text-3xl font-bold text-center text-white py-6 bg">Spelling Bee</h1>
@@ -142,8 +165,28 @@ function App() {
 
         {/* Start modal*/}
         {!start &&
-          <div className='w-full h-screen absolute z-10 start-modal'>
-            <button className='absolute top-28 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>
+          <div className='w-full h-screen absolute z-10 start-modal flex flex-col justify-center items-center px-16'>
+            <div className='bg-gray-500 mb-11 p-5 rounded-md'>
+              <p className='text-white md:text-xl text-center'>Thanks for trying out Spelling Bee 🥳</p>
+              {!words &&
+                <div>
+                  <p className='text-white md:text-xl text-center'>Please allow a few seconds for the server to spin up...</p>
+                  <div className='flex justify-center my-10'>
+                    <button className='p-4 bg-blue-200 wait-btn flex justify-center' onClick={handleWait}>
+                      <img src={wait} className='w-9' />
+                      <audio src={tick} autoPlay id="wait-tick" />
+                    </button>
+                  </div>
+                  {
+                    <p className='text-center text-white'>{waitNotes()}</p>
+                  }
+                </div>
+              }
+            </div>
+
+            {words &&
+              <button className='w-32 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30 ' onClick={handleStart}>Start</button>
+            }
           </div>
         }
 

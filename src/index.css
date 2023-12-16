@@ -67,6 +67,32 @@ input {
   animation: glow 1.5s ease-in-out infinite alternate;
 }
 
+.wait-btn {
+  animation: pulse 1s infinite ease-in;
+}
+
+.wait-btn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 3px 3px 2px orange;
+  }
+  25% {
+    box-shadow: -3px 3px 2px orange;
+  }
+  50% {
+    box-shadow: -3px -3px 2px orange;
+  }
+  75% {
+    box-shadow: 3px -3px 2px orange;
+  }
+  100% {
+    box-shadow: 3px 3px 2px orange;
+  }
+}
+
 @keyframes glow {
   from {
     text-shadow: 0 0 0px #fff;
