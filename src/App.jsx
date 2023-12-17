@@ -135,18 +135,22 @@ function App() {
     }
   }, [showInput]);
 
-  const waitNotes = () => {
-    const notes = [
-      "still waiting...",
-      "a bit longer 🫸",
-      "sorry...",
-      "it's a free tier web service...",
-      "💤",
-      "🦒",
-      "🍍",
-      "🐝🐝🐝"
-    ]
+  const notes = [
+    "still waiting...",
+    "a bit longer 🫸",
+    "it's a free tier web service...",
+    "💤😴😴💤",
+    "⌚⌛⏳⏳⏳⏳⏳⏳⌚",
+    "click click click click click click click click click click",
+    "Just keep clicking...just keep clicking 🐠🐠",
+    "Click Forrest, Click!",
+    "Patience is not simply the ability to wait - it's how we behave while we're waiting -Joyce Meyer",
+    "Waiting is a period of learning. The longer we wait, the more we hear about him for whom we are waiting -Henri Nouwen",
+    "🐝🐝🐝",
+    "it may take 30 seconds, but should be no longer than one minute..."
+  ]
 
+  const waitNotes = () => {
     const i = Math.floor(Math.random() * notes.length);
     const item = notes[i];
     return item
