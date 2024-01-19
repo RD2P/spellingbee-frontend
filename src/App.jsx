@@ -172,7 +172,7 @@ function App() {
                 <p className='text-white md:text-xl text-center'>Please allow a few seconds for the server to spin up...</p>
                 <div className='flex justify-center my-10'>
                   <button className='p-4 bg-blue-200 wait-btn flex justify-center' onClick={handleWait}>
-                    <img src={wait} className='w-9' />
+                    <img src={wait} alt="wait" className='w-9' />
                     <audio src={tick} autoPlay id="wait-tick" />
                   </button>
                 </div>
@@ -219,7 +219,7 @@ function App() {
 
             {/* Sound icon */}
             <div className='bg-gray-100 p-4 rounded-lg mt-9 w-16 lg:w-24 cursor-pointer' id="soundIcon" onClick={handleRepeat}>
-              <img src={sound} />
+              <img src={sound} alt="sound"/>
               <audio id="sound" autoPlay src={src}>Your browser does not support audio</audio>
             </div>
 
