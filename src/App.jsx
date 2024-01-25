@@ -169,7 +169,7 @@ function App() {
             <p className='text-white md:text-xl text-center'>Thanks for trying out Spelling Bee 🥳</p>
             {!words &&
               <div>
-                <p className='text-white md:text-xl text-center'>Please allow a few seconds for the server to spin up...</p>
+                <p className='text-white md:text-xl text-center'>Please allow a few seconds for the server to spin up... <br/> (it's a free tier web service...)</p>
                 <div className='flex justify-center my-10'>
                   <button className='p-4 bg-blue-200 wait-btn flex justify-center' onClick={handleWait}>
                     <img src={wait} alt="wait" className='w-9' />
