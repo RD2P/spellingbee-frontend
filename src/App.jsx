@@ -31,7 +31,12 @@ function App() {
 
   useEffect(() => {
     // axios.get('http://localhost:4000/api/v1/words')
-    axios.get('https://spellingbee-backend.onrender.com/api/v1/words')
+
+    // Render api:
+    // axios.get('https://spellingbee-backend.onrender.com/api/v1/words')
+    
+    // AWS api:
+    axios.get('http://3.81.127.116/api/v1/words')
       .then((res) => {
         setWords(res.data)
         setPossibleScore(res.data.length)
@@ -62,7 +67,12 @@ function App() {
         words.splice(randomIndex, 1)
 
         // const result = await axios.get(`http://localhost:4000/api/v1/word?w=${randomWord}`)
-        const result = await axios.get(`https://spellingbee-backend.onrender.com/api/v1/word?w=${randomWord}`)
+        
+        //Render api:
+        // const result = await axios.get(`https://spellingbee-backend.onrender.com/api/v1/word?w=${randomWord}`)
+        
+        //AWS api:
+        const result = await axios.get(`http://3.81.127.116/api/v1/word?w=${randomWord}`)
         const newWord = result.data
         setCurrentWord(newWord)
         const newSrc = result.data.audio
